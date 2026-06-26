@@ -91,6 +91,13 @@ export const env = Object.freeze({
   /** Number of retries for flaky tests (CI typically overrides this). */
   retries: readInt('RETRIES', 0),
 
+  /**
+   * Enables the full guest order-placement E2E. Off by default because the
+   * public demo blocks checkout; set true against a guest-checkout-enabled
+   * instance (see docs/local-opencart.md).
+   */
+  runCheckoutE2E: readBool('RUN_CHECKOUT_E2E', false),
+
   /** Parallel worker count; empty => Playwright auto-detects. */
   workers: process.env.WORKERS ? readInt('WORKERS', 1) : undefined,
 

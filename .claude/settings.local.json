@@ -14,7 +14,8 @@
       "Bash(python -c \"import yaml,sys; yaml.safe_load\\(open\\('.github/workflows/playwright.yml'\\)\\); print\\('YAML valid'\\)\")",
       "Bash(node -e \"const fs=require\\('fs'\\);const s=fs.readFileSync\\('.github/workflows/playwright.yml','utf8'\\);let ind=s.split\\('\\\\n'\\).filter\\(l=>l.includes\\('\\\\t'\\)\\);console.log\\('tabs found:',ind.length\\);console.log\\('lines:',s.split\\('\\\\n'\\).length\\);console.log\\('basic check done \\(python yaml unavailable\\)'\\)\")",
       "PowerShell(cd \"d:\\\\Plawright MCP with Claude\"; npm run format:check 2>&1 | Select-Object -Last 2; Write-Host \"format exit: $LASTEXITCODE\")",
-      "PowerShell(cd \"d:\\\\Plawright MCP with Claude\"; $env:SLOWMO=700; npx playwright test cart.smoke --project=chromium --headed --workers=1 --reporter=list 2>&1 | Select-Object -Last 25; Remove-Item Env:\\\\SLOWMO)"
+      "PowerShell(cd \"d:\\\\Plawright MCP with Claude\"; $env:SLOWMO=700; npx playwright test cart.smoke --project=chromium --headed --workers=1 --reporter=list 2>&1 | Select-Object -Last 25; Remove-Item Env:\\\\SLOWMO)",
+      "PowerShell(cd \"d:\\\\Plawright MCP with Claude\"; npx prettier --write \"pages/order-success.page.ts\" \"tests/regression/checkout.regression.spec.ts\" \"fixtures/pages.fixture.ts\" \"config/env.config.ts\" 2>&1 | Select-Object -Last 1; npx tsc --noEmit; Write-Host \"tsc: $LASTEXITCODE\"; npx eslint .; Write-Host \"eslint: $LASTEXITCODE\"; Write-Host \"--- checkout test should SKIP by default ---\"; npx playwright test checkout.regression --project=chromium --reporter=list 2>&1 | Select-Object -Last 6; Write-Host \"--- docker compose validation ---\"; docker compose -f docker-compose.yml config --quiet 2>&1 | Select-Object -First 3; Write-Host \"docker exit: $LASTEXITCODE\")"
     ]
   }
 }

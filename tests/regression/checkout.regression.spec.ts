@@ -1,22 +1,21 @@
 /**
- * Regression: Checkout.
+ * Regression: Checkout (full guest order placement).
  *
- * IMPORTANT — public demo limitation:
- * The TutorialsNinja demo store has guest checkout disabled AND blocks order
- * placement: `checkout/checkout` redirects back to the cart even when logged
- * in. A full order-placement assertion therefore cannot pass on this target.
+ * This is a REAL test gated by `RUN_CHECKOUT_E2E`. It:
+ *   - SKIPS by default (the public demo disables guest checkout and blocks
+ *     order placement — `checkout/checkout` redirects to the cart), and
+ *   - RUNS against an OpenCart instance with guest checkout enabled
+ *     (see docs/local-opencart.md: `docker compose up -d`, then
+ *      `BASE_URL=http://localhost:8080/ RUN_CHECKOUT_E2E=true npm run test:regression`).
  *
- * The CheckoutPage object (guest happy-path) is retained for a real store with
- * checkout enabled, and the end-to-end test below is written but marked
- * `fixme` so its intent is documented without failing CI. The reachable
- * boundary (a populated cart ready for checkout) is covered in
- * cart.regression.spec.ts.
+ * The reachable cart→checkout boundary is also covered in cart.regression.spec.ts.
  */
 import { test, expect } from '@fixtures/index';
+import { env } from '@config/env.config';
 
 test.describe('Checkout', () => {
-  test.fixme(
-    'guest can place an order end-to-end (requires guest checkout enabled)',
+  test(
+    'guest can place an order end-to-end',
     { tag: '@regression' },
     async ({
       homePage,
@@ -24,28 +23,34 @@ test.describe('Checkout', () => {
       productPage,
       cartPage,
       checkoutPage,
+      orderSuccessPage,
       testData,
     }) => {
+      test.skip(
+        !env.runCheckoutE2E,
+        'Requires guest checkout (set RUN_CHECKOUT_E2E=true; see docs/local-opencart.md).',
+      );
+
+      // Arrange: add a product and proceed to checkout.
       const product = testData.search.valid.expectedProduct;
       const billing = testData.checkout.guestBilling;
-
-      // Add a product and go to checkout.
       await homePage.open();
       await homePage.header.searchFor(product);
       await searchResultsPage.openProduct(product);
       await productPage.addToCart();
+      expect(await productPage.getSuccessMessage()).toContain('Success');
       await cartPage.open();
       await cartPage.proceedToCheckout();
 
-      // Guest checkout happy path.
+      // Act: guest checkout happy path.
       await checkoutPage.chooseGuestCheckout();
       await checkoutPage.fillBillingDetails(billing);
       await checkoutPage.confirmDeliveryMethod();
       await checkoutPage.confirmPaymentMethod();
       await checkoutPage.confirmOrder();
 
-      // On a real store this would assert the order-success heading.
-      expect(checkoutPage.getUrl()).toContain('checkout/success');
+      // Assert: order confirmation is shown.
+      expect(await orderSuccessPage.isOrderPlaced()).toBe(true);
     },
   );
 });

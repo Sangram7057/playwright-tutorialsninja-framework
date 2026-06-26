@@ -1,0 +1,58 @@
+# Local OpenCart stack for running the full order-placement E2E.
+#
+# The public TutorialsNinja demo disables guest checkout and blocks order
+# placement. This brings up a private OpenCart 3.x instance (matching the page
+# objects' DOM) where guest checkout works, so the checkout E2E can run.
+#
+# Usage:
+#   docker compose up -d
+#   # wait for http://localhost:8080 to come up (first boot installs the DB)
+#   BASE_URL=http://localhost:8080/ RUN_CHECKOUT_E2E=true npm run test:regression
+#
+# See docs/local-opencart.md for details (incl. enabling guest checkout).
+
+services:
+  mariadb:
+    image: docker.io/bitnami/mariadb:10.11
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=bn_opencart
+      - MARIADB_DATABASE=bitnami_opencart
+    volumes:
+      - mariadb_data:/bitnami/mariadb
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  opencart:
+    # Pin to OpenCart 3.x so the framework's selectors match (OpenCart 4 changed
+    # the checkout DOM). Adjust the tag if your registry differs.
+    image: docker.io/bitnami/opencart:3
+    ports:
+      - '8080:8080'
+      - '8443:8443'
+    environment:
+      - OPENCART_HOST=localhost:8080
+      - OPENCART_DATABASE_HOST=mariadb
+      - OPENCART_DATABASE_PORT_NUMBER=3306
+      - OPENCART_DATABASE_USER=bn_opencart
+      - OPENCART_DATABASE_NAME=bitnami_opencart
+      - ALLOW_EMPTY_PASSWORD=yes
+      - OPENCART_ENABLE_HTTPS=no
+      # Admin credentials (used to toggle settings such as guest checkout).
+      - OPENCART_USERNAME=admin
+      - OPENCART_PASSWORD=bitnami123
+      - OPENCART_EMAIL=admin@example.com
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    volumes:
+      - opencart_data:/bitnami/opencart
+
+volumes:
+  mariadb_data:
+    driver: local
+  opencart_data:
+    driver: local
