@@ -15,6 +15,7 @@ import { WishlistPage } from '@pages/wishlist.page';
 import { CartPage } from '@pages/cart.page';
 import { CheckoutPage } from '@pages/checkout.page';
 import { AccountPage } from '@pages/account.page';
+import { CategoryPage } from '@pages/category.page';
 
 /** The set of page objects exposed to every test. */
 export interface PageFixtures {
@@ -27,6 +28,7 @@ export interface PageFixtures {
   cartPage: CartPage;
   checkoutPage: CheckoutPage;
   accountPage: AccountPage;
+  categoryPage: CategoryPage;
 }
 
 export const test = base.extend<PageFixtures>({
@@ -56,5 +58,8 @@ export const test = base.extend<PageFixtures>({
   },
   accountPage: async ({ page }, use) => {
     await use(new AccountPage(page));
+  },
+  categoryPage: async ({ page }, use) => {
+    await use(new CategoryPage(page));
   },
 });

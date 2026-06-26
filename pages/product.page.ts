@@ -24,12 +24,13 @@ export class ProductPage extends StorePage {
     this.priceLabel = content.locator('.price, ul.list-unstyled .price-new').first();
     this.quantityInput = page.locator('#input-quantity');
     this.addToCartButton = page.locator('#button-cart');
-    this.addToWishlistButton = content.locator(
-      'button[data-original-title="Add to Wish List"]',
-    );
-    this.addToCompareButton = content.locator(
-      'button[data-original-title="Compare this Product"]',
-    );
+    // Use the stable onclick handler: the tooltip `title` is moved to
+    // `data-original-title` only after Bootstrap initialises, so matching on
+    // the title attribute is racy. `.first()` targets the MAIN product's
+    // button — the "Related Products" carousel also exposes wishlist/compare
+    // buttons, and the main product is always first in DOM order.
+    this.addToWishlistButton = content.locator('button[onclick^="wishlist.add"]').first();
+    this.addToCompareButton = content.locator('button[onclick^="compare.add"]').first();
     this.successAlert = page.locator('.alert-success').first();
   }
 

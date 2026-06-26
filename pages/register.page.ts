@@ -20,6 +20,7 @@ export class RegisterPage extends StorePage {
   private readonly continueButton: Locator;
   private readonly warningAlert: Locator;
   private readonly successHeading: Locator;
+  private readonly confirmPasswordError: Locator;
 
   constructor(page: Page) {
     super(page, 'RegisterPage');
@@ -37,6 +38,9 @@ export class RegisterPage extends StorePage {
     this.successHeading = page.getByRole('heading', {
       name: 'Your Account Has Been Created!',
     });
+    this.confirmPasswordError = page.locator(
+      '.form-group:has(#input-confirm) .text-danger',
+    );
   }
 
   /** Opens the registration page. */
@@ -44,14 +48,21 @@ export class RegisterPage extends StorePage {
     await this.navigateTo(ROUTES.REGISTER);
   }
 
-  /** Fills the form with a generated user (without submitting). */
-  async fillForm(user: GeneratedUser): Promise<void> {
+  /**
+   * Fills the form with a generated user (without submitting).
+   * `confirmPassword` defaults to the user's password; pass a different value
+   * to exercise the password-mismatch validation.
+   */
+  async fillForm(
+    user: GeneratedUser,
+    confirmPassword: string = user.password,
+  ): Promise<void> {
     await this.fill(this.firstNameInput, user.firstName, 'First name');
     await this.fill(this.lastNameInput, user.lastName, 'Last name');
     await this.fill(this.emailInput, user.email, 'Email');
     await this.fill(this.telephoneInput, user.telephone, 'Telephone');
     await this.fill(this.passwordInput, user.password, 'Password');
-    await this.fill(this.confirmPasswordInput, user.password, 'Confirm password');
+    await this.fill(this.confirmPasswordInput, confirmPassword, 'Confirm password');
   }
 
   /** Accepts the privacy policy and submits the form. */
@@ -79,5 +90,13 @@ export class RegisterPage extends StorePage {
       return '';
     }
     return this.getText(this.warningAlert, 'Register warning');
+  }
+
+  /** Returns the confirm-password field validation error, empty if none. */
+  async getConfirmPasswordError(): Promise<string> {
+    if (!(await this.isVisible(this.confirmPasswordError))) {
+      return '';
+    }
+    return this.getText(this.confirmPasswordError, 'Confirm password error');
   }
 }

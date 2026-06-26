@@ -42,7 +42,8 @@ export class WishlistPage extends StorePage {
   /** Removes a product from the wishlist by name. */
   async removeProduct(name: string): Promise<void> {
     const row = this.rows.filter({ hasText: name });
-    const removeButton = row.locator('button[data-original-title="Remove"]');
+    // The wishlist "Remove" control is an anchor (not a button) in this theme.
+    const removeButton = row.locator('[data-original-title="Remove"]');
     await this.click(removeButton, `Remove "${name}" from wishlist`);
   }
 

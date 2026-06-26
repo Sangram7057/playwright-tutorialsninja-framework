@@ -13,6 +13,7 @@ export class AccountPage extends StorePage {
   private readonly editAccountLink: Locator;
   private readonly passwordLink: Locator;
   private readonly logoutLink: Locator;
+  private readonly editFirstNameInput: Locator;
 
   constructor(page: Page) {
     super(page, 'AccountPage');
@@ -23,6 +24,7 @@ export class AccountPage extends StorePage {
     });
     this.passwordLink = content.getByRole('link', { name: 'Change your password' });
     this.logoutLink = content.getByRole('link', { name: 'Logout' });
+    this.editFirstNameInput = page.locator('#input-firstname');
   }
 
   /** Opens the account dashboard directly. */
@@ -43,6 +45,11 @@ export class AccountPage extends StorePage {
   /** Opens the "Change Password" section. */
   async openChangePassword(): Promise<void> {
     await this.click(this.passwordLink, 'Change Password');
+  }
+
+  /** Returns the first-name value shown on the Edit Account form. */
+  async getEditAccountFirstName(): Promise<string> {
+    return this.getInputValue(this.editFirstNameInput, 'Edit Account first name');
   }
 
   /** Logs out via the account-page link. */
