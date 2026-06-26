@@ -51,6 +51,11 @@ export default defineConfig({
     baseURL: env.baseUrl,
     headless: env.headless,
 
+    // Optional slow-motion (ms) for watching/debugging runs: SLOWMO=600 npm ...
+    launchOptions: {
+      slowMo: Number(process.env.SLOWMO ?? 0),
+    },
+
     actionTimeout: env.actionTimeout,
     navigationTimeout: env.navigationTimeout,
 
