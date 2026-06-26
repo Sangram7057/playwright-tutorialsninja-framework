@@ -17,7 +17,7 @@ export class SearchResultsPage extends StorePage {
     const content = page.locator('#content');
     this.products = content.locator('.product-thumb');
     this.productTitles = this.products.locator('h4 a');
-    this.noResultsText = content.getByText('There are no products to display.');
+    this.noResultsText = content.getByText('no product that matches the search criteria');
   }
 
   /** Returns the number of products in the result grid. */
