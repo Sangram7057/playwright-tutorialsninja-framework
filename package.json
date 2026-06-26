@@ -22,6 +22,7 @@
     "report:allure": "allure generate reports/allure-results --clean -o reports/allure-report && allure open reports/allure-report",
     "report:allure:generate": "allure generate reports/allure-results --clean -o reports/allure-report",
     "report:summary": "node scripts/generate-test-summary.mjs",
+    "report:pdf": "node scripts/generate-test-report.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"**/*.{ts,js,json,md}\"",

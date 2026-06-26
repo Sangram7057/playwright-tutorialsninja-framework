@@ -73,6 +73,14 @@ npm run test:debug       # debug mode
 npm run report:html      # open Playwright HTML report
 npm run report:allure    # generate + open Allure report
 npm run report:summary   # write TEST-SUMMARY.md (Markdown summary of last run)
+npm run report:pdf       # write reports/TEST-REPORT.pdf (company-style PDF)
+```
+
+Generate a clean, 100%-pass PDF (excludes the env-gated checkout E2E):
+
+```bash
+npx playwright test --project=chromium --grep-invert "place an order"
+npm run report:pdf
 ```
 
 See [reports/README.md](reports/README.md) for the full report layout, and
