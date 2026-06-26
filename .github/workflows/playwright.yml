@@ -121,6 +121,9 @@ jobs:
     needs: test
     if: ${{ always() }}
     runs-on: ubuntu-latest
+    # Allow pushing the generated report to the gh-pages branch.
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -146,12 +149,36 @@ jobs:
           path: reports/allure-results
           merge-multiple: true
 
+      # Pull the previous report's history so Allure can render trend graphs.
+      - name: Checkout existing gh-pages (for history)
+        uses: actions/checkout@v4
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Restore Allure history
+        run: |
+          mkdir -p reports/allure-results/history
+          if [ -d gh-pages/history ]; then
+            cp -r gh-pages/history/. reports/allure-results/history/
+          fi
+
       - name: Generate Allure report
         run: npm run report:allure:generate
 
-      - name: Upload Allure report
+      - name: Upload Allure report (artifact)
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
           path: reports/allure-report
           retention-days: 30
+
+      # Publish to GitHub Pages on pushes to the main branches (not PRs/forks).
+      - name: Deploy to GitHub Pages
+        if: ${{ github.event_name == 'push' }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: reports/allure-report
+          publish_branch: gh-pages

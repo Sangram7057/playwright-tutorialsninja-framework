@@ -101,7 +101,14 @@ push/PR to `main`/`master`:
 1. **quality** — typecheck, lint, format check.
 2. **test** — cross-browser matrix (chromium/firefox/webkit) with npm + browser
    caching; uploads HTML, Allure results, JUnit and failure artifacts.
-3. **allure-report** — aggregates all browsers' results into one Allure report.
+3. **allure-report** — aggregates all browsers' results into one Allure report,
+   restores history for trend graphs, and **publishes it to GitHub Pages**
+   (`gh-pages` branch) on pushes to the main branches. Enable Pages once in
+   repo Settings → Pages → Source: `gh-pages`. The report is then served at
+   `https://<owner>.github.io/<repo>/`.
+
+> Pre-commit hooks (Husky + lint-staged) auto-run ESLint + Prettier on staged
+> files, so the `quality` gate rarely fails in CI.
 
 ## Notes on the demo target
 
