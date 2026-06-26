@@ -1,1 +1,1 @@
-[{"values":["qa"],"name":"environment"},{"values":["https://tutorialsninja.com/demo/"],"name":"baseUrl"},{"values":["chromium"],"name":"browser"},{"values":["true"],"name":"headless"},{"values":["true"],"name":"ci"},{"values":["v20.20.2"],"name":"nodeVersion"},{"values":["linux"],"name":"platform"}]
+[]

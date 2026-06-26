@@ -1,8 +1,0 @@
-2026-06-26 12:59:24.255 info: [HomePage] Navigate to "index.php?route=common/home"
-2026-06-26 12:59:25.057 info: [Header] Fill "Search box" with "iPhone"
-2026-06-26 12:59:55.079 error: [Header] Failed: Fill "Search box" with "iPhone" -> locator.fill: Timeout 30000ms exceeded.
-Call log:
-  - waiting for getByPlaceholder('Search')
-    4 × waiting for" https://tutorialsninja.com/demo/index.php?route=common/home" navigation to finish...
-      - navigated to "https://tutorialsninja.com/demo/index.php?route=common/home"
-

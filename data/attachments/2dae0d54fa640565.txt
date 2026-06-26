@@ -1,5 +1,0 @@
-2026-06-26 12:59:55.849 info: [HomePage] Navigate to "index.php?route=common/home"
-2026-06-26 13:00:05.888 error: [HomePage] Failed: Navigate to "index.php?route=common/home" -> page.goto: Operation was cancelled; maybe frame was detached?
-Call log:
-  - navigating to "https://tutorialsninja.com/demo/index.php?route=common/home", waiting until "domcontentloaded"
-

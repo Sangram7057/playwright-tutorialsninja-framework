@@ -1,8 +1,0 @@
-2026-06-26 12:54:47.470 info: [RegisterPage] Navigate to "index.php?route=account/register"
-2026-06-26 12:54:48.420 info: [RegisterPage] Fill "First name" with "Isaias"
-2026-06-26 12:55:18.437 error: [RegisterPage] Failed: Fill "First name" with "Isaias" -> locator.fill: Timeout 30000ms exceeded.
-Call log:
-  - waiting for locator('#input-firstname')
-    3 × waiting for" https://tutorialsninja.com/demo/index.php?route=account/register" navigation to finish...
-      - navigated to "https://tutorialsninja.com/demo/index.php?route=account/register"
-
