@@ -1,0 +1,8 @@
+2026-06-26 14:15:55.885 info: [LoginPage] Navigate to "index.php?route=account/login"
+2026-06-26 14:15:56.926 info: [LoginPage] Fill "Email" with "non.existent.user@example.com"
+2026-06-26 14:16:26.939 error: [LoginPage] Failed: Fill "Email" with "non.existent.user@example.com" -> locator.fill: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('#input-email')
+    5 × waiting for" https://tutorialsninja.com/demo/index.php?route=account/login" navigation to finish...
+      - navigated to "https://tutorialsninja.com/demo/index.php?route=account/login"
+

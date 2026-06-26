@@ -1,0 +1,71 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: regression/navigation.regression.spec.ts >> Navigation >> all expected top-level categories are present
+- Location: tests/regression/navigation.regression.spec.ts:24:3
+
+# Error details
+
+```
+Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: true
+Received: false
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - img "Loader" [ref=e5]
+  - generic [ref=e20]: Please wait while your request is being verified...
+```
+
+# Test source
+
+```ts
+  1  | /**
+  2  |  * Regression: Category navigation.
+  3  |  * Verifies the main menu navigates to the correct category listing.
+  4  |  */
+  5  | import { test, expect } from '@fixtures/index';
+  6  | import { MAIN_CATEGORY } from '@components/navigation.component';
+  7  | 
+  8  | test.describe('Navigation', () => {
+  9  |   test(
+  10 |     'opening a top-level category lands on its listing page',
+  11 |     { tag: '@regression' },
+  12 |     async ({ homePage, categoryPage }) => {
+  13 |       // Arrange
+  14 |       await homePage.open();
+  15 | 
+  16 |       // Act: Tablets is a direct (non-dropdown) category link.
+  17 |       await homePage.navigation.openCategory(MAIN_CATEGORY.TABLETS);
+  18 | 
+  19 |       // Assert: breadcrumb reflects the chosen category.
+  20 |       expect(await categoryPage.getActiveBreadcrumb()).toContain('Tablets');
+  21 |     },
+  22 |   );
+  23 | 
+  24 |   test(
+  25 |     'all expected top-level categories are present',
+  26 |     { tag: '@regression' },
+  27 |     async ({ homePage }) => {
+  28 |       // Arrange
+  29 |       await homePage.open();
+  30 | 
+  31 |       // Assert
+  32 |       for (const category of Object.values(MAIN_CATEGORY)) {
+> 33 |         expect(await homePage.navigation.hasCategory(category)).toBe(true);
+     |                                                                 ^ Error: expect(received).toBe(expected) // Object.is equality
+  34 |       }
+  35 |     },
+  36 |   );
+  37 | });
+  38 | 
+```
