@@ -13,6 +13,7 @@ import { mergeTests } from '@playwright/test';
 import { test as pagesTest } from '@fixtures/pages.fixture';
 import { test as dataTest } from '@fixtures/test-data.fixture';
 import { test as authTest } from '@fixtures/auth.fixture';
+import { test as apiTest } from '@fixtures/api.fixture';
 
-export const test = mergeTests(pagesTest, dataTest, authTest);
+export const test = mergeTests(pagesTest, dataTest, authTest, apiTest);
 export { expect } from '@playwright/test';
