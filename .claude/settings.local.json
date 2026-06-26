@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(node --version)",
+      "PowerShell(npm --version)",
+      "PowerShell(npm install 2>&1)",
+      "PowerShell(npx playwright install 2>&1)",
+      "PowerShell(cd \"d:\\\\Plawright MCP with Claude\"; npx tsc --noEmit; Write-Host \"tsc exit: $LASTEXITCODE\"; npx eslint .; Write-Host \"eslint exit: $LASTEXITCODE\")"
+    ]
+  }
+}

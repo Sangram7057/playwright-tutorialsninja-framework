@@ -1,0 +1,60 @@
+{
+  "name": "tutorialsninja-automation-framework",
+  "version": "1.0.0",
+  "description": "Enterprise-grade Playwright + TypeScript automation framework for the TutorialsNinja (OpenCart) demo store.",
+  "author": "QA Automation Architecture Team",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:regression": "playwright test --grep @regression",
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:webkit": "playwright test --project=webkit",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui",
+    "report:html": "playwright show-report reports/html-report",
+    "report:allure": "allure generate reports/allure-results --clean -o reports/allure-report && allure open reports/allure-report",
+    "report:allure:generate": "allure generate reports/allure-results --clean -o reports/allure-report",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"**/*.{ts,js,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,js,json,md}\"",
+    "typecheck": "tsc --noEmit",
+    "prepare:browsers": "playwright install --with-deps"
+  },
+  "keywords": [
+    "playwright",
+    "typescript",
+    "automation",
+    "page-object-model",
+    "allure",
+    "opencart"
+  ],
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "@playwright/test": "^1.48.0",
+    "@types/node": "^22.7.0",
+    "@typescript-eslint/eslint-plugin": "^8.10.0",
+    "@typescript-eslint/parser": "^8.10.0",
+    "allure-commandline": "^2.30.0",
+    "allure-playwright": "^3.0.0",
+    "eslint": "^9.13.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.11.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.10.0"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.0.3",
+    "dotenv": "^16.4.5",
+    "winston": "^3.15.0"
+  }
+}
