@@ -1,0 +1,12 @@
+{
+  "valid": {
+    "term": "iPhone",
+    "expectedProduct": "iPhone"
+  },
+  "multipleResults": {
+    "term": "mac"
+  },
+  "noResults": {
+    "term": "zzqxnonexistentproduct123"
+  }
+}

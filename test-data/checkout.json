@@ -1,0 +1,13 @@
+{
+  "guestBilling": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe.guest@example.com",
+    "telephone": "1234567890",
+    "address1": "123 Test Street",
+    "city": "London",
+    "postcode": "E1 6AN",
+    "country": "United Kingdom",
+    "region": "London"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "simpleProduct": {
+    "name": "iPhone",
+    "searchTerm": "iPhone"
+  },
+  "featured": ["MacBook", "iPhone", "Canon EOS 5D"]
+}

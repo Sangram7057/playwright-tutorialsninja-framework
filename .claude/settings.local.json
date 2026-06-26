@@ -6,7 +6,9 @@
       "PowerShell(npm install 2>&1)",
       "PowerShell(npx playwright install 2>&1)",
       "PowerShell(cd \"d:\\\\Plawright MCP with Claude\"; npx tsc --noEmit; Write-Host \"tsc exit: $LASTEXITCODE\"; npx eslint .; Write-Host \"eslint exit: $LASTEXITCODE\")",
-      "PowerShell(cd \"d:\\\\Plawright MCP with Claude\"; npx prettier --write \"pages/product.page.ts\" 2>&1 | Select-Object -Last 1; npx tsc --noEmit; Write-Host \"tsc: $LASTEXITCODE\"; npx playwright test _pages --project=chromium --reporter=list 2>&1 | Select-Object -Last 10)"
+      "PowerShell(cd \"d:\\\\Plawright MCP with Claude\"; npx prettier --write \"pages/product.page.ts\" 2>&1 | Select-Object -Last 1; npx tsc --noEmit; Write-Host \"tsc: $LASTEXITCODE\"; npx playwright test _pages --project=chromium --reporter=list 2>&1 | Select-Object -Last 10)",
+      "PowerShell(cd \"d:\\\\Plawright MCP with Claude\"; npx tsc --noEmit; Write-Host \"tsc: $LASTEXITCODE\"; npx eslint .; Write-Host \"eslint: $LASTEXITCODE\")",
+      "PowerShell(cd \"d:\\\\Plawright MCP with Claude\"; npx eslint .; Write-Host \"eslint: $LASTEXITCODE\"; npx playwright test _fixtures --project=chromium --workers=1 --reporter=list 2>&1 | Select-Object -Last 18)"
     ]
   }
 }
