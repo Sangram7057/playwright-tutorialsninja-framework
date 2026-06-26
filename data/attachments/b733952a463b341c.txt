@@ -1,0 +1,5 @@
+2026-06-26 12:58:58.321 info: [RegisterPage] Navigate to "index.php?route=account/register"
+2026-06-26 12:59:08.368 error: [RegisterPage] Failed: Navigate to "index.php?route=account/register" -> page.goto: Operation was cancelled; maybe frame was detached?
+Call log:
+  - navigating to "https://tutorialsninja.com/demo/index.php?route=account/register", waiting until "domcontentloaded"
+

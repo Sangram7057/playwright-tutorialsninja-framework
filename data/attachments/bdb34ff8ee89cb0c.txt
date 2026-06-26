@@ -1,0 +1,8 @@
+2026-06-26 13:07:35.544 info: [HomePage] Navigate to "index.php?route=common/home"
+2026-06-26 13:07:36.373 info: [Header] Fill "Search box" with "zzqxnonexistentproduct123"
+2026-06-26 13:08:06.387 error: [Header] Failed: Fill "Search box" with "zzqxnonexistentproduct123" -> locator.fill: Timeout 30000ms exceeded.
+Call log:
+  - waiting for getByPlaceholder('Search')
+    3 × waiting for" https://tutorialsninja.com/demo/index.php?route=common/home" navigation to finish...
+      - navigated to "https://tutorialsninja.com/demo/index.php?route=common/home"
+

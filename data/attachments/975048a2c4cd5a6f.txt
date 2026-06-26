@@ -1,0 +1,7 @@
+2026-06-26 12:54:54.822 info: [HomePage] Navigate to "index.php?route=common/home"
+2026-06-26 12:54:56.489 info: [Header] Fill "Search box" with "iPhone"
+2026-06-26 12:54:56.538 info: [Header] Click "Search button"
+2026-06-26 12:54:57.117 info: [SearchResultsPage] Click "Product "iPhone""
+2026-06-26 12:54:57.528 info: [ProductPage] Click "Add to Cart"
+2026-06-26 12:54:58.674 info: [ProductPage] Read text of "Success banner"
+2026-06-26 12:54:58.682 info: [CartPage] Navigate to "index.php?route=checkout/cart"

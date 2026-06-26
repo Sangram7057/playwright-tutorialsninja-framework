@@ -1,0 +1,11 @@
+2026-06-26 13:02:23.180 info: [AuthFixture] Registering worker user: reilly37.1782478942474701@example.com
+2026-06-26 13:02:23.182 info: [RegisterPage] Navigate to "index.php?route=account/register"
+2026-06-26 13:02:24.001 info: [RegisterPage] Fill "First name" with "Niko"
+2026-06-26 13:02:54.015 error: [RegisterPage] Failed: Fill "First name" with "Niko" -> locator.fill: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('#input-firstname')
+    2 × waiting for navigation to finish...
+      - navigated to "https://tutorialsninja.com/demo/index.php?route=account/register"
+    3 × waiting for" https://tutorialsninja.com/demo/index.php?route=account/register" navigation to finish...
+      - navigated to "https://tutorialsninja.com/demo/index.php?route=account/register"
+

@@ -1,0 +1,5 @@
+2026-06-26 12:55:00.401 info: [LoginPage] Navigate to "index.php?route=account/login"
+2026-06-26 12:55:02.043 info: [LoginPage] Fill "Email" with "non.existent.user@example.com"
+2026-06-26 12:55:02.102 info: [LoginPage] Fill "Password" with "WrongPassword123!"
+2026-06-26 12:55:02.129 info: [LoginPage] Click "Login button"
+2026-06-26 12:55:04.751 info: [LoginPage] Read text of "Login warning"

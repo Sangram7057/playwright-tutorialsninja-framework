@@ -1,0 +1,6 @@
+2026-06-26 12:59:32.996 info: [AuthFixture] Registering worker user: ismaelkuhlman67.1782478772742929@example.com
+2026-06-26 12:59:32.998 info: [RegisterPage] Navigate to "index.php?route=account/register"
+2026-06-26 12:59:43.035 error: [RegisterPage] Failed: Navigate to "index.php?route=account/register" -> page.goto: Operation was cancelled; maybe frame was detached?
+Call log:
+  - navigating to "https://tutorialsninja.com/demo/index.php?route=account/register", waiting until "domcontentloaded"
+
