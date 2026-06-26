@@ -10,6 +10,9 @@ fixtures, and rich reporting.
 > clean machine (Claude Code, Playwright/Filesystem/Git/Memory/Sequential-Thinking
 > MCP, and the optional LinkedIn MCP)? See the
 > [MCP setup guide](docs/MCP-SETUP-GUIDE.md).
+>
+> 📣 Read the write-up on LinkedIn:
+> [How this framework was built with Claude Code + MCP](https://www.linkedin.com/feed/update/urn:li:activity:7476270509102530560/).
 
 ## Highlights
 
