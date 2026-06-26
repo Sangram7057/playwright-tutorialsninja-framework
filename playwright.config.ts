@@ -14,6 +14,9 @@ export default defineConfig({
   // Where the test specs live.
   testDir: './tests',
 
+  // Seeds Allure with environment + failure-category metadata before the run.
+  globalSetup: './config/global-setup.ts',
+
   // Global per-test timeout and assertion timeout.
   timeout: 60_000,
   expect: {

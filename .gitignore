@@ -8,6 +8,7 @@ node_modules/
 
 # Playwright / test outputs
 reports/
+!reports/README.md
 test-results/
 playwright-report/
 playwright/.cache/
