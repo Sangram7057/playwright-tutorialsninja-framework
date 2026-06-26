@@ -1,0 +1,8 @@
+2026-06-26 08:11:28.877 info: [HomePage] Navigate to "index.php?route=common/home"
+2026-06-26 08:11:30.419 info: [Header] Fill "Search box" with "iPhone"
+2026-06-26 08:11:30.475 info: [Header] Click "Search button"
+2026-06-26 08:11:31.461 info: [SearchResultsPage] Click "Product "iPhone""
+2026-06-26 08:11:31.984 info: [ProductPage] Read text of "Product price"
+2026-06-26 08:11:32.297 info: [Header] Click "Currency switcher"
+2026-06-26 08:11:32.341 info: [Header] Click "Currency option EUR"
+2026-06-26 08:11:33.060 info: [ProductPage] Read text of "Product price"
