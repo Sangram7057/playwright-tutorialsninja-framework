@@ -29,5 +29,8 @@ Thumbs.db
 .idea/
 *.swp
 
+# Claude Code / agent local config (machine-specific)
+.claude/
+
 # TypeScript build info
 *.tsbuildinfo

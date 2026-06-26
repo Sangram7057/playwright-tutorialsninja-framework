@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(python -c \"import yaml; d=yaml.safe_load\\(open\\('.github/workflows/playwright.yml'\\)\\); print\\('YAML valid'\\); print\\('jobs:', list\\(d['jobs'].keys\\(\\)\\)\\); print\\('allure-report permissions:', d['jobs']['allure-report'].get\\('permissions'\\)\\)\")",
-      "PowerShell(cd \"d:\\\\Plawright MCP with Claude\"; npx prettier --write \"README.md\" 2>&1 | Select-Object -Last 1; npm run format:check 2>&1 | Select-Object -Last 1; Write-Host \"fmt: $LASTEXITCODE\"; npx tsc --noEmit; Write-Host \"tsc: $LASTEXITCODE\"; npx eslint .; Write-Host \"eslint: $LASTEXITCODE\")"
-    ]
-  }
-}
