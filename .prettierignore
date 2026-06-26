@@ -6,3 +6,6 @@ allure-results
 allure-report
 package-lock.json
 *.log
+
+# Source brief / docs that are authored by hand, not formatted by Prettier
+Context.md

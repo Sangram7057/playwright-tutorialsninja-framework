@@ -10,7 +10,10 @@
       "PowerShell(cd \"d:\\\\Plawright MCP with Claude\"; npx tsc --noEmit; Write-Host \"tsc: $LASTEXITCODE\"; npx eslint .; Write-Host \"eslint: $LASTEXITCODE\")",
       "PowerShell(cd \"d:\\\\Plawright MCP with Claude\"; npx eslint .; Write-Host \"eslint: $LASTEXITCODE\"; npx playwright test _fixtures --project=chromium --workers=1 --reporter=list 2>&1 | Select-Object -Last 18)",
       "Bash(node -e ' *)",
-      "PowerShell(cd \"d:\\\\Plawright MCP with Claude\"; npx prettier --write \"config/global-setup.ts\" 2>&1 | Select-Object -Last 1; npx tsc --noEmit; Write-Host \"tsc: $LASTEXITCODE\"; npx eslint .; Write-Host \"eslint: $LASTEXITCODE\"; Remove-Item -Recurse -Force \"reports\\\\allure-results\",\"reports\\\\allure-report\" -ErrorAction SilentlyContinue; npx playwright test tests/smoke/home.smoke.spec.ts --project=chromium 2>&1 | Select-Object -Last 5)"
+      "PowerShell(cd \"d:\\\\Plawright MCP with Claude\"; npx prettier --write \"config/global-setup.ts\" 2>&1 | Select-Object -Last 1; npx tsc --noEmit; Write-Host \"tsc: $LASTEXITCODE\"; npx eslint .; Write-Host \"eslint: $LASTEXITCODE\"; Remove-Item -Recurse -Force \"reports\\\\allure-results\",\"reports\\\\allure-report\" -ErrorAction SilentlyContinue; npx playwright test tests/smoke/home.smoke.spec.ts --project=chromium 2>&1 | Select-Object -Last 5)",
+      "Bash(python -c \"import yaml,sys; yaml.safe_load\\(open\\('.github/workflows/playwright.yml'\\)\\); print\\('YAML valid'\\)\")",
+      "Bash(node -e \"const fs=require\\('fs'\\);const s=fs.readFileSync\\('.github/workflows/playwright.yml','utf8'\\);let ind=s.split\\('\\\\n'\\).filter\\(l=>l.includes\\('\\\\t'\\)\\);console.log\\('tabs found:',ind.length\\);console.log\\('lines:',s.split\\('\\\\n'\\).length\\);console.log\\('basic check done \\(python yaml unavailable\\)'\\)\")",
+      "PowerShell(cd \"d:\\\\Plawright MCP with Claude\"; npm run format:check 2>&1 | Select-Object -Last 2; Write-Host \"format exit: $LASTEXITCODE\")"
     ]
   }
 }
