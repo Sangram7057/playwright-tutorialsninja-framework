@@ -57,6 +57,18 @@ export default tseslint.config(
     },
   },
 
+  // Node scripts (.mjs) — provide Node globals (process, console, …).
+  {
+    files: ['**/*.mjs'],
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'module',
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
+
   // Disable formatting rules that conflict with Prettier (keep last).
   prettierConfig,
 );

@@ -34,3 +34,6 @@ Thumbs.db
 
 # TypeScript build info
 *.tsbuildinfo
+
+# LinkedIn post assets (generated, not part of the framework)
+linkedin-post-assets/

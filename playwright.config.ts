@@ -41,6 +41,7 @@ export default defineConfig({
     ['html', { outputFolder: 'reports/html-report', open: 'never' }],
     ['allure-playwright', { resultsDir: 'reports/allure-results', detail: true }],
     ['junit', { outputFile: 'reports/junit/results.xml' }],
+    ['json', { outputFile: 'reports/json/results.json' }],
   ],
 
   // Raw artifacts (screenshots/videos/traces) for failed tests.

@@ -6,6 +6,11 @@ fixtures, and rich reporting.
 
 [![Playwright Tests](https://img.shields.io/badge/tests-Playwright-2EAD33?logo=playwright)](.github/workflows/playwright.yml)
 
+> 🤖 **Built with Claude Code + MCP servers.** Want to reproduce the setup from a
+> clean machine (Claude Code, Playwright/Filesystem/Git/Memory/Sequential-Thinking
+> MCP, and the optional LinkedIn MCP)? See the
+> [MCP setup guide](docs/MCP-SETUP-GUIDE.md).
+
 ## Highlights
 
 - **Page Object Model** with a logged, auto-waiting `BasePage` foundation.
@@ -67,9 +72,11 @@ npm run test:debug       # debug mode
 ```bash
 npm run report:html      # open Playwright HTML report
 npm run report:allure    # generate + open Allure report
+npm run report:summary   # write TEST-SUMMARY.md (Markdown summary of last run)
 ```
 
-See [reports/README.md](reports/README.md) for the full report layout.
+See [reports/README.md](reports/README.md) for the full report layout, and
+[TEST-SUMMARY.md](TEST-SUMMARY.md) for the latest run's at-a-glance summary.
 
 ## Quality
 
