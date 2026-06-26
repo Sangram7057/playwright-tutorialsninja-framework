@@ -1,3 +1,0 @@
-2026-06-26 08:11:49.452 info: [HomePage] Navigate to "index.php?route=common/home"
-2026-06-26 08:11:51.272 info: [Navigation] Click "Category "Tablets""
-2026-06-26 08:11:52.927 info: [CategoryPage] Read text of "Active breadcrumb"

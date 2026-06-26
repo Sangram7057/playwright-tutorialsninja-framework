@@ -1,3 +1,0 @@
-2026-06-26 08:11:52.345 info: [HomePage] Navigate to "index.php?route=common/home"
-2026-06-26 08:11:53.862 info: [Header] Fill "Search box" with "zzqxnonexistentproduct123"
-2026-06-26 08:11:53.951 info: [Header] Click "Search button"

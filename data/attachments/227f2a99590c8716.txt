@@ -1,3 +1,0 @@
-2026-06-26 08:11:50.650 info: [HomePage] Navigate to "index.php?route=common/home"
-2026-06-26 08:11:52.313 info: [Header] Fill "Search box" with "iPhone"
-2026-06-26 08:11:52.415 info: [Header] Click "Search button"
