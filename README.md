@@ -128,6 +128,15 @@ push/PR to `main`/`master`:
 > Pre-commit hooks (Husky + lint-staged) auto-run ESLint + Prettier on staged
 > files, so the `quality` gate rarely fails in CI.
 
+### Jenkins (Amazon EC2)
+
+The same suite runs on Jenkins via the repo's [`Jenkinsfile`](Jenkinsfile):
+quality gate → tests → JUnit + Playwright HTML + Allure publishing, with
+`BROWSER`/`SUITE` build parameters. Every step executes inside the official
+Playwright Docker image, so the host only needs Jenkins + Docker. For the
+full EC2 walkthrough (instance sizing, install commands, plugins, webhooks),
+see [docs/jenkins-ec2-setup.md](docs/jenkins-ec2-setup.md).
+
 ## Notes on the demo target
 
 The public demo **disables guest checkout and blocks order placement**

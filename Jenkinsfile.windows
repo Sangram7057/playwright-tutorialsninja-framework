@@ -1,0 +1,85 @@
+/**
+ * Windows-local variant of the CI pipeline.
+ *
+ * Runs directly on a Windows Jenkins host using the locally installed Node —
+ * no Docker required (the Docker Pipeline plugin cannot run the Linux
+ * Playwright container from a Windows node). Use the main `Jenkinsfile`
+ * (Dockerised) for Linux agents such as the EC2 setup in
+ * docs/jenkins-ec2-setup.md.
+ *
+ * Job config: Pipeline script from SCM → Script Path: Jenkinsfile.windows
+ */
+pipeline {
+  agent any
+
+  parameters {
+    choice(name: 'BROWSER', choices: ['all', 'chromium', 'firefox', 'webkit'],
+           description: 'Browser project to run')
+    choice(name: 'SUITE', choices: ['all', 'smoke', 'regression'],
+           description: 'Tag-filtered suite (@smoke / @regression)')
+  }
+
+  options {
+    timestamps()
+    disableConcurrentBuilds()
+    buildDiscarder(logRotator(numToKeepStr: '20'))
+    timeout(time: 90, unit: 'MINUTES')
+  }
+
+  environment {
+    CI = 'true'
+    // Framework config consumed by config/env.config.ts (no .env in CI).
+    HEADLESS = 'true'
+    ACTION_TIMEOUT = '30000'
+    NAVIGATION_TIMEOUT = '45000'
+  }
+
+  stages {
+    stage('Install') {
+      steps {
+        bat 'npm ci'
+        // Downloads browser binaries on first run, then hits the cache.
+        bat 'npx playwright install'
+      }
+    }
+
+    stage('Quality gate') {
+      steps {
+        bat 'npm run typecheck'
+        bat 'npm run lint'
+        bat 'npm run format:check'
+      }
+    }
+
+    stage('Test') {
+      steps {
+        script {
+          def projectArg = params.BROWSER == 'all' ? '' : "--project=${params.BROWSER}"
+          def grepArg = params.SUITE == 'all' ? '' : "--grep @${params.SUITE}"
+          bat "npx playwright test ${projectArg} ${grepArg}".trim()
+        }
+      }
+    }
+  }
+
+  post {
+    always {
+      junit testResults: 'reports/junit/*.xml', allowEmptyResults: true
+
+      publishHTML(target: [
+        reportName: 'Playwright HTML Report',
+        reportDir: 'reports/html-report',
+        reportFiles: 'index.html',
+        keepAll: true,
+        alwaysLinkToLastBuild: true,
+        allowMissing: true,
+      ])
+
+      allure(results: [[path: 'reports/allure-results']])
+
+      archiveArtifacts artifacts: 'reports/test-artifacts/**, reports/junit/**',
+                       allowEmptyArchive: true,
+                       fingerprint: false
+    }
+  }
+}
