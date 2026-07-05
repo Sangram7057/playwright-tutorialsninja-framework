@@ -1,0 +1,1 @@
+2026-07-05 08:01:25.682 info: [HomePage] Navigate to "index.php?route=common/home"

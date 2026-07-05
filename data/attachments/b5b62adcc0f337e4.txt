@@ -1,0 +1,8 @@
+2026-07-05 07:58:07.657 info: [HomePage] Navigate to "index.php?route=common/home"
+2026-07-05 07:58:08.479 info: [Navigation] Click "Category "Tablets""
+2026-07-05 07:58:38.508 error: [Navigation] Failed: Click "Category "Tablets"" -> locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('#menu').getByRole('link', { name: 'Tablets', exact: true })
+    5 × waiting for" https://tutorialsninja.com/demo/index.php?route=common/home" navigation to finish...
+      - navigated to "https://tutorialsninja.com/demo/index.php?route=common/home"
+

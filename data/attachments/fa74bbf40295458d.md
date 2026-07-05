@@ -1,0 +1,236 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: smoke/search.smoke.spec.ts >> Search >> valid search returns matching products
+- Location: tests/smoke/search.smoke.spec.ts:8:3
+
+# Error details
+
+```
+TimeoutError: locator.fill: Timeout 30000ms exceeded.
+Call log:
+  - waiting for getByPlaceholder('Search')
+    4 × waiting for" https://tutorialsninja.com/demo/index.php?route=common/home" navigation to finish...
+      - navigated to "https://tutorialsninja.com/demo/index.php?route=common/home"
+
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - img "Loader" [ref=e5]
+  - generic [ref=e18]: Please wait while your request is being verified...
+```
+
+# Test source
+
+```ts
+  5   |  * around the most common Playwright interactions (navigate, click, fill,
+  6   |  * select, hover, upload, download, scroll, wait, read). Page Objects compose
+  7   |  * these instead of re-implementing waits/logging, so behaviour is consistent
+  8   |  * and traceable everywhere.
+  9   |  *
+  10  |  * Design rules honoured here:
+  11  |  *  - NO assertions in action methods (assertions live in tests).
+  12  |  *  - Every action logs its intent and surfaces a meaningful error on failure
+  13  |  *    (Playwright then captures trace/video/screenshot automatically).
+  14  |  *  - Methods accept Locators (web-first, auto-waiting) — never raw waits/sleeps.
+  15  |  */
+  16  | import type { Download, Locator, Page, Response } from '@playwright/test';
+  17  | import type { Logger } from 'winston';
+  18  | import { createLogger } from '@utils/logger';
+  19  | import { TIMEOUTS } from '@constants/timeouts';
+  20  | 
+  21  | export abstract class BasePage {
+  22  |   protected readonly page: Page;
+  23  |   protected readonly log: Logger;
+  24  | 
+  25  |   protected constructor(page: Page, scope: string) {
+  26  |     this.page = page;
+  27  |     this.log = createLogger(scope);
+  28  |   }
+  29  | 
+  30  |   // --------------------------------------------------------------------------
+  31  |   // Internal helper — wraps every action with consistent logging + error context.
+  32  |   // --------------------------------------------------------------------------
+  33  | 
+  34  |   /** Runs an action, logging intent on entry and enriching errors on failure. */
+  35  |   protected async execute<T>(description: string, action: () => Promise<T>): Promise<T> {
+  36  |     this.log.info(description);
+  37  |     try {
+  38  |       return await action();
+  39  |     } catch (error) {
+  40  |       const message = error instanceof Error ? error.message : String(error);
+  41  |       this.log.error(`Failed: ${description} -> ${message}`);
+  42  |       throw error instanceof Error ? error : new Error(message);
+  43  |     }
+  44  |   }
+  45  | 
+  46  |   // --------------------------------------------------------------------------
+  47  |   // Navigation
+  48  |   // --------------------------------------------------------------------------
+  49  | 
+  50  |   /** Navigates to a path relative to the configured baseURL. */
+  51  |   async navigateTo(path = ''): Promise<Response | null> {
+  52  |     return this.execute(`Navigate to "${path || '/'}"`, () =>
+  53  |       this.page.goto(path, { waitUntil: 'domcontentloaded' }),
+  54  |     );
+  55  |   }
+  56  | 
+  57  |   /** Waits until the page reaches the given load state (default: networkidle). */
+  58  |   async waitForLoad(
+  59  |     state: 'load' | 'domcontentloaded' | 'networkidle' = 'load',
+  60  |   ): Promise<void> {
+  61  |     await this.execute(`Wait for load state "${state}"`, () =>
+  62  |       this.page.waitForLoadState(state),
+  63  |     );
+  64  |   }
+  65  | 
+  66  |   /** Returns the current page title. */
+  67  |   async getTitle(): Promise<string> {
+  68  |     return this.page.title();
+  69  |   }
+  70  | 
+  71  |   /** Returns the current URL. */
+  72  |   getUrl(): string {
+  73  |     return this.page.url();
+  74  |   }
+  75  | 
+  76  |   // --------------------------------------------------------------------------
+  77  |   // Waiting
+  78  |   // --------------------------------------------------------------------------
+  79  | 
+  80  |   /** Waits for an element to become visible. */
+  81  |   async waitForVisible(locator: Locator, name: string): Promise<void> {
+  82  |     await this.execute(`Wait for "${name}" to be visible`, () =>
+  83  |       locator.waitFor({ state: 'visible', timeout: TIMEOUTS.MEDIUM }),
+  84  |     );
+  85  |   }
+  86  | 
+  87  |   /** Waits for an element to be detached/hidden. */
+  88  |   async waitForHidden(locator: Locator, name: string): Promise<void> {
+  89  |     await this.execute(`Wait for "${name}" to be hidden`, () =>
+  90  |       locator.waitFor({ state: 'hidden', timeout: TIMEOUTS.MEDIUM }),
+  91  |     );
+  92  |   }
+  93  | 
+  94  |   // --------------------------------------------------------------------------
+  95  |   // Interactions
+  96  |   // --------------------------------------------------------------------------
+  97  | 
+  98  |   /** Clicks an element (auto-waits for actionability). */
+  99  |   async click(locator: Locator, name: string): Promise<void> {
+  100 |     await this.execute(`Click "${name}"`, () => locator.click());
+  101 |   }
+  102 | 
+  103 |   /** Clears then fills a text field. */
+  104 |   async fill(locator: Locator, value: string, name: string): Promise<void> {
+> 105 |     await this.execute(`Fill "${name}" with "${value}"`, () => locator.fill(value));
+      |                                                                        ^ TimeoutError: locator.fill: Timeout 30000ms exceeded.
+  106 |   }
+  107 | 
+  108 |   /** Types text key-by-key (use only when real keystrokes are required). */
+  109 |   async type(locator: Locator, value: string, name: string): Promise<void> {
+  110 |     await this.execute(`Type into "${name}"`, () => locator.pressSequentially(value));
+  111 |   }
+  112 | 
+  113 |   /** Selects a dropdown option by its visible label. */
+  114 |   async selectByLabel(locator: Locator, label: string, name: string): Promise<void> {
+  115 |     await this.execute(`Select "${label}" in "${name}"`, () =>
+  116 |       locator.selectOption({ label }),
+  117 |     );
+  118 |   }
+  119 | 
+  120 |   /** Selects a dropdown option by its value attribute. */
+  121 |   async selectByValue(locator: Locator, value: string, name: string): Promise<void> {
+  122 |     await this.execute(`Select value "${value}" in "${name}"`, () =>
+  123 |       locator.selectOption({ value }),
+  124 |     );
+  125 |   }
+  126 | 
+  127 |   /** Hovers over an element. */
+  128 |   async hover(locator: Locator, name: string): Promise<void> {
+  129 |     await this.execute(`Hover over "${name}"`, () => locator.hover());
+  130 |   }
+  131 | 
+  132 |   /** Checks a checkbox/radio (no-op if already checked). */
+  133 |   async check(locator: Locator, name: string): Promise<void> {
+  134 |     await this.execute(`Check "${name}"`, () => locator.check());
+  135 |   }
+  136 | 
+  137 |   /** Unchecks a checkbox (no-op if already unchecked). */
+  138 |   async uncheck(locator: Locator, name: string): Promise<void> {
+  139 |     await this.execute(`Uncheck "${name}"`, () => locator.uncheck());
+  140 |   }
+  141 | 
+  142 |   /** Presses a keyboard key while focused on an element. */
+  143 |   async pressKey(locator: Locator, key: string, name: string): Promise<void> {
+  144 |     await this.execute(`Press "${key}" on "${name}"`, () => locator.press(key));
+  145 |   }
+  146 | 
+  147 |   /** Scrolls an element into the viewport. */
+  148 |   async scrollIntoView(locator: Locator, name: string): Promise<void> {
+  149 |     await this.execute(`Scroll "${name}" into view`, () =>
+  150 |       locator.scrollIntoViewIfNeeded(),
+  151 |     );
+  152 |   }
+  153 | 
+  154 |   // --------------------------------------------------------------------------
+  155 |   // Upload / Download
+  156 |   // --------------------------------------------------------------------------
+  157 | 
+  158 |   /** Uploads one or more files to an <input type="file"> element. */
+  159 |   async uploadFiles(
+  160 |     locator: Locator,
+  161 |     files: string | string[],
+  162 |     name: string,
+  163 |   ): Promise<void> {
+  164 |     await this.execute(`Upload file(s) to "${name}"`, () => locator.setInputFiles(files));
+  165 |   }
+  166 | 
+  167 |   /**
+  168 |    * Triggers a download by clicking `trigger` and returns the Download object.
+  169 |    * The caller decides where/whether to persist it.
+  170 |    */
+  171 |   async downloadFile(trigger: Locator, name: string): Promise<Download> {
+  172 |     return this.execute(`Download file via "${name}"`, async () => {
+  173 |       const [download] = await Promise.all([
+  174 |         this.page.waitForEvent('download', { timeout: TIMEOUTS.DOWNLOAD }),
+  175 |         trigger.click(),
+  176 |       ]);
+  177 |       return download;
+  178 |     });
+  179 |   }
+  180 | 
+  181 |   // --------------------------------------------------------------------------
+  182 |   // Reads (no assertions — just data retrieval for the test to assert on)
+  183 |   // --------------------------------------------------------------------------
+  184 | 
+  185 |   /** Returns trimmed inner text of an element. */
+  186 |   async getText(locator: Locator, name: string): Promise<string> {
+  187 |     return this.execute(`Read text of "${name}"`, async () =>
+  188 |       (await locator.innerText()).trim(),
+  189 |     );
+  190 |   }
+  191 | 
+  192 |   /** Returns the value of an input element. */
+  193 |   async getInputValue(locator: Locator, name: string): Promise<string> {
+  194 |     return this.execute(`Read value of "${name}"`, () => locator.inputValue());
+  195 |   }
+  196 | 
+  197 |   /** Returns whether an element is currently visible (does not throw/wait long). */
+  198 |   async isVisible(locator: Locator): Promise<boolean> {
+  199 |     return locator.isVisible();
+  200 |   }
+  201 | 
+  202 |   /** Returns the number of elements matching the locator. */
+  203 |   async count(locator: Locator): Promise<number> {
+  204 |     return locator.count();
+  205 |   }
+```

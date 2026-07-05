@@ -1,5 +1,0 @@
-2026-07-05 06:42:22.255 info: [HomePage] Navigate to "index.php?route=common/home"
-2026-07-05 06:42:23.474 info: [Header] Fill "Search box" with "iPhone"
-2026-07-05 06:42:23.516 info: [Header] Click "Search button"
-2026-07-05 06:42:23.924 info: [SearchResultsPage] Click "Product "iPhone""
-2026-07-05 06:42:24.328 info: [ProductPage] Click "Add to Cart"
