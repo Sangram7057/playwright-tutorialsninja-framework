@@ -43,13 +43,14 @@ ssh -i your-key.pem ubuntu@<EC2_PUBLIC_IP>
 ```bash
 sudo apt update && sudo apt -y upgrade
 
-# Jenkins requires Java 17 or 21
-sudo apt -y install openjdk-17-jre-headless git
+# Jenkins requires Java 21 (Java 17 support was dropped; supported: 21, 25)
+sudo apt -y install openjdk-21-jre-headless git
 
-# Jenkins LTS apt repository
+# Jenkins LTS apt repository. NOTE: the signing key rotates every few years —
+# if apt later reports NO_PUBKEY, look for a newer jenkins.io-20XX.key.
 sudo mkdir -p /etc/apt/keyrings
 sudo wget -O /etc/apt/keyrings/jenkins-keyring.asc \
-  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+  https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key
 echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc]" \
   "https://pkg.jenkins.io/debian-stable binary/" \
   | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
