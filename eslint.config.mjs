@@ -58,6 +58,8 @@ export default tseslint.config(
   },
 
   // Node scripts (.mjs) — provide Node globals (process, console, …).
+  // Browser globals are included too: automation scripts pass callbacks to
+  // Playwright's page.evaluate(), which run in the page (document, window).
   {
     files: ['**/*.mjs'],
     languageOptions: {
@@ -65,7 +67,13 @@ export default tseslint.config(
       sourceType: 'module',
       globals: {
         ...globals.node,
+        ...globals.browser,
       },
+    },
+    rules: {
+      // Probe/automation scripts intentionally swallow "element not found"
+      // style failures when trying selector fallbacks.
+      'no-empty': ['error', { allowEmptyCatch: true }],
     },
   },
 
