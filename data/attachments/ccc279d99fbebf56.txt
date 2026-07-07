@@ -1,6 +1,0 @@
-2026-07-05 08:04:41.347 info: [HomePage] Navigate to "index.php?route=common/home"
-2026-07-05 08:04:42.123 info: [Header] Fill "Search box" with "iPhone"
-2026-07-05 08:05:12.143 error: [Header] Failed: Fill "Search box" with "iPhone" -> locator.fill: Timeout 30000ms exceeded.
-Call log:
-  - waiting for getByPlaceholder('Search')
-
